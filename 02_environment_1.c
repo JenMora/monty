@@ -15,7 +15,7 @@ void freeTokens(void)
 {
 	size_t i = 0;
 
-	if (token_operators== NULL)
+	if ( token_operators== NULL)
 		return;
 	for (i = 0; token_operators[i]; i++)
 		free(token_operators[i]);
