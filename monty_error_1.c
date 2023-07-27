@@ -1,7 +1,7 @@
 #include "monty.h"
 
 int no_int_error(unsigned int line_number);
-int f_open_error(char *filename); 
+int f_open_error(char *filename);
 int monty_usg_err(void);
 int monty_malloc_err(void);
 int monty_op_err(char *opcode, unsigned int line_number);

@@ -41,7 +41,7 @@ unsigned int token_arr_len(void)
 }
 
 /**
- * monty_is_empty_line -  A function that checks if a line read from
+ * is_empty_line - A function that checks if a line read from
  * getline only contains delimiters.
  * @line: A pointer to the line.
  * @delims: A string of delimiter characters.
