@@ -1,4 +1,5 @@
 #include "monty.h"
+char **token_operators = NULL;
 
 int main(int argc, char **argv)
 {
@@ -9,7 +10,7 @@ int main(int argc, char **argv)
 		return (montyRunError());
 
 	fileDir= fopen(argv[1], "r");
-	if (fileDir== NULL)
+	if (fileDir == NULL)
 		return (fileOpenError(argv[1]));
 
 	mj_exit= letsRunMonty(fileDir);
