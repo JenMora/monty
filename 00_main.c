@@ -7,39 +7,60 @@
 #define _GNU_SOURCE
 #define _POSIX_C_SOURCE 200809L
 
-int main(int argc, char **argv)
+int main(void)
 {
-    FILE *bytecode;
-    char *line_buf = NULL;
-    size_t line_buf_size = 0;
-    ssize_t line_size;
-    stack_t *stack = NULL;
-    unsigned int line_number = 0;
+	FILE *mj_byt_code = fopen("path/to/your/file", "r");
+	char buf_at_line[512];
+	unsigned int ln_num = 0;
+	stack_t *stack = NULL;
+	size_t size_of_line;
 
-    if (argc != 2)
-    {
-        fprintf(stderr, "USAGE: monty file\n");
-        exit(EXIT_FAILURE);
-    }
+	if (mj_byt_code == NULL)
+	{
+		fprintf(stderr, "Error: Cannot open file\n");
+		exit(EXIT_FAILURE);
+	}
 
-    bytecode = fopen(argv[1], "r");
-    if (!bytecode)
-    {
-        fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
-        exit(EXIT_FAILURE);
-    }
+	while (fgets(buf_at_line, sizeof(buf_at_line), mj_byt_code))
+	{
+		size_of_line = strlen(buf_at_line);
+		if (size_of_line > 1)
+		{
+			execute_line(buf_at_line, &stack, ln_num);
+		}
+		ln_num++;
+	}
 
-    while (fgets(line_buf, line_buf_size, bytecode))
-    {
-        line_size = strlen(line_buf);
-        if (line_size > 1)
-        {
-            execute_line(line_buf, &stack, line_number);
-        }
-    }
-    free(line_buf);
-    fclose(bytecode);
-    free_stack(&stack);
-    return 0;
+	fclose(mj_byt_code);
+	free_stack(&stack);
+
+	return (0);
+
+	/*FILE *mj_byt_code;
+	char *buf_at_line = NULL;
+	unsigned int ln_num = 0;
+	size_t buf_at_size_of_line = 0;
+	ssize_t size_of_line;
+	stack_t *stack = NULL;
+	
+
+	if (argc != 2)
+	{
+		fprintf(stderr, "USAGE: monty file\n");
+		exit(EXIT_FAILURE);
+	}
+
+	while (fgets(buf_at_line, buf_at_size_of_line, mj_byt_code))
+	{
+		size_of_line = strlen(buf_at_line);
+
+		if (size_of_line > 1)
+		{
+			execute_line(buf_at_line, &stack, ln_num);
+		}
+	}
+	free(buf_at_line);
+	fclose(mj_byt_code);
+	free_stack(&stack);
+	return (0);*/
 }
-
