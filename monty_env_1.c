@@ -1,19 +1,19 @@
-#define _POSIX_C_SOURCE 200809L // This macro enables POSIX.1-2008 features
-
+#define _POSIX_C_SOURCE 200809L
+/*helps with the getline function*/
 #include "monty.h"
-#include <stdio.h>
 #include <string.h>
+#include <stdio.h>
 
-void free_tokens(void);
+void monty_free_tkns(void);
 unsigned int token_arr_len(void);
 int is_empty_line(char *line, char *delims);
-void (*get_op_func(char *opcode))(stack_t**, unsigned int);
+void (*monty_opcode(char *opcode))(stack_t**, unsigned int);
 int run_monty(FILE *script_fd);
 
 /**
- * free_tokens - Frees the global op_toks array of strings.
+ * monty_free_tkns - Frees the global op_toks array of strings.
  */
-void free_tokens(void)
+void monty_free_tkns(void)
 {
 	size_t i = 0;
 
@@ -41,7 +41,8 @@ unsigned int token_arr_len(void)
 }
 
 /**
- * is_empty_line - Checks if a line read from getline only contains delimiters.
+ * monty_is_empty_line -  A function that checks if a line read from
+ * getline only contains delimiters.
  * @line: A pointer to the line.
  * @delims: A string of delimiter characters.
  *
@@ -67,12 +68,12 @@ int is_empty_line(char *line, char *delims)
 }
 
 /**
- * get_op_func - Matches an opcode with its corresponding function.
+ * monty_opcode  - Matches an opcode with its corresponding function.
  * @opcode: The opcode to match.
  *
  * Return: A pointer to the corresponding function.
  */
-void (*get_op_func(char *opcode))(stack_t**, unsigned int)
+void (*monty_opcode(char *opcode))(stack_t**, unsigned int)
 {
 	instruction_t op_funcs[] = {
 		{"push", monty_push},
@@ -119,7 +120,7 @@ int run_monty(FILE *script_fd)
 	unsigned int line_number = 0, prev_tok_len = 0;
 	void (*op_func)(stack_t**, unsigned int);
 
-	if (init_stack(&stack) == EXIT_FAILURE)
+	if (monty_monty_init_stack(&stack) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 
 	while (getline(&line, &len, script_fd) != -1)
@@ -130,20 +131,20 @@ int run_monty(FILE *script_fd)
 		{
 			if (is_empty_line(line, DELIMS))
 				continue;
-			free_stack(&stack);
-			return (malloc_error());
+			monty_free_stack(&stack);
+			return (monty_malloc_err());
 		}
 		else if (op_toks[0][0] == '#') /* comment line */
 		{
-			free_tokens();
+			monty_free_tkns();
 			continue;
 		}
-		op_func = get_op_func(op_toks[0]);
+		op_func = monty_opcode(op_toks[0]);
 		if (op_func == NULL)
 		{
-			free_stack(&stack);
-			exit_status = unknown_op_error(op_toks[0], line_number);
-			free_tokens();
+			monty_free_stack(&stack);
+			exit_status = monty_op_err(op_toks[0], line_number);
+			monty_free_tkns();
 			break;
 		}
 		prev_tok_len = token_arr_len();
@@ -154,17 +155,17 @@ int run_monty(FILE *script_fd)
 				exit_status = atoi(op_toks[prev_tok_len]);
 			else
 				exit_status = EXIT_FAILURE;
-			free_tokens();
+			monty_free_tkns();
 			break;
 		}
-		free_tokens();
+		monty_free_tkns();
 	}
-	free_stack(&stack);
+	monty_free_stack(&stack);
 
 	if (line && *line == 0)
 	{
 		free(line);
-		return (malloc_error());
+		return (monty_malloc_err());
 	}
 
 	free(line);

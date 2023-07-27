@@ -5,7 +5,8 @@ void monty_pchar(stack_t **stack, unsigned int line_number);
 void monty_pstr(stack_t **stack, unsigned int line_number);
 
 /**
- * monty_nop - Does absolutely nothing for the Monty opcode 'nop'.
+ * monty_nop - A function that does absolutely nothing for
+ * the Monty opcode 'nop'.
  * @stack: A pointer to the top mode node of a stack_t linked list.
  * @line_number: The current working line number of a Monty bytecodes file.
  */
@@ -39,7 +40,8 @@ void monty_pchar(stack_t **stack, unsigned int line_number)
 }
 
 /**
- * monty_pstr - Prints the string contained in a stack_t linked list.
+ * monty_pstr - A function that prints the string contained
+ * in a stack_t linked list.
  * @stack: A pointer to the top mode node of a stack_t linked list.
  * @line_number: The current working line number of a Monty bytecodes file.
  */
@@ -57,5 +59,4 @@ void monty_pstr(stack_t **stack, unsigned int line_number)
 
 	(void)line_number;
 }
-
 
