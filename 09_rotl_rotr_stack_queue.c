@@ -1,33 +1,29 @@
 #include "monty.h"
 
-void rotl(stack_t **stack, unsigned int line_number);
-void rotr(stack_t **stack, unsigned int line_number);
-void sta_ck(stack_t **stack, unsigned int line_number);
-void que_ue(stack_t **stack, unsigned int line_number);
+void c27_op_rotl(stack_t **stack, unsigned int line_number);
+void c28_op_rotr(stack_t **stack, unsigned int line_number);
+void c29_op_stack(stack_t **stack, unsigned int line_number);
+void c30_op_queue(stack_t **stack, unsigned int line_number);
 
 /**
- * rotl - rotates the top to bottom
+ * c27_op_rotl - rotates the top to bottom
  * @stack: the stack
  * @line_number: the line number
  */
-void rotl(stack_t **stack, unsigned int line_number)
+void c27_op_rotl(stack_t **stack, unsigned int line_number)
 {
-	stack_t *top, *bottom;
+	stack_t *top; 
+stack_t *bottom;
 
-	(void)line_number;
+(void)line_number;
 
 	if ((*stack)->next == NULL || (*stack)->next->next == NULL)
-	{
 		return;
-	}
 	top = (*stack)->next;
 	bottom = (*stack)->next;
 
 	while (bottom->next != NULL)
-	{
 		bottom = bottom->next;
-	}
-
 	top->next->prev = *stack;
 	(*stack)->next = top->next;
 	bottom->next = top;
@@ -36,53 +32,48 @@ void rotl(stack_t **stack, unsigned int line_number)
 }
 
 /**
- * rotr - rotates too
+ * c28_op_rotr - rotates too
  * @stack: the stack
  * @line_number: the line number
  */
-void rotr(stack_t **stack, unsigned int line_number)
+void c28_op_rotr(stack_t **stack, unsigned int line_number)
 {
-	stack_t *top, *bottom;
+	stack_t *top; 
+	stack_t *bottom;
 
 	(void)line_number;
 
 	if ((*stack)->next == NULL || (*stack)->next->next == NULL)
 		return;
-
 	top = (*stack)->next;
 	bottom = (*stack)->next;
-
 	while (bottom->next != NULL)
 		bottom = bottom->next;
-
 	bottom->prev->next = NULL;
 	(*stack)->next = bottom;
 	bottom->prev = *stack;
 	bottom->next = top;
 	top->prev = bottom;
-	
 }
 
 /**
- * sta_ck - from queue to stack
+ * c29_op_stack - from queue to stack
  * @stack: the stack
  * @line_number: the line number
  */
-void sta_ck(stack_t **stack, unsigned int line_number)
+void c29_op_stack(stack_t **stack, unsigned int line_number)
 {
-	(*stack)->n = MJ_STACK;
-
+	(*stack)->n = STACK;
 	(void)line_number;
 }
 
 /**
- * que_ue - converts stack to queue
+ * c30_op_queue - converts stack to queue
  * @stack: the stack
  * @line_number: the line number
  */
-void que_ue(stack_t **stack, unsigned int line_number)
+void c30_op_queue(stack_t **stack, unsigned int line_number)
 {
-	(*stack)->n = MJ_QUEUE;
-
+	(*stack)->n = QUEUE;
 	(void)line_number;
 }

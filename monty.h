@@ -1,101 +1,87 @@
 #ifndef MONTY_H
 #define MONTY_H
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <stddef.h>
 #include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-#define MJ_STACK 0
-#define MJ_QUEUE 1
-#define DELIMETER " \n\t\a\b\r"
+#define STACK 0
+#define QUEUE 1
+#define C7_DELIMITER " \n\t\a\b\r"
+
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
  * @prev: points to the previous element of the stack (or queue)
  * @next: points to the next element of the stack (or queue)
- *
- * Description: doubly linked list node structure
- * for stack, queues, LIFO, FIFO
- */
+*/
 typedef struct stack_s
 {
-        int n;
-        struct stack_s *prev;
-        struct stack_s *next;
+	int n;
+	struct stack_s *prev;
+	struct stack_s *next;
 } stack_t;
+
 /**
  * struct instruction_s - opcode and its function
  * @opcode: the opcode
  * @f: function to handle the opcode
- *
- * Description: opcode and its function
- * for stack, queues, LIFO, FIFO
- */
+*/
 typedef struct instruction_s
 {
-        char *opcode;
-        void (*f)(stack_t **stack, unsigned int line_number);
+	char *opcode;
+	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
+extern char **c1_optokens;
 
-extern char **token_operators;
+void c8_free_stk(stack_t **stack);
+int c9_init(stack_t **stack);
+int c10_check(stack_t *stack);
+void c11_free_tokens(void);
+unsigned int c12_token_length_Er(void);
+int c6_execute_mty(FILE *c2_file_dir);
+void c13_token_opSet_Er(int error_code);
 
-void mj_free_the_stack(stack_t **stack);
-int initStack(stack_t **stack);
-int checkMonty(stack_t *stack);
-void freeTokens(void);
-unsigned int lengthToken(void);
-int letsRunMonty(FILE *fileDir);
-void setOprationTokenError(int _mj_err);
-
-
-void push(stack_t **stack, unsigned int line_number);
-void pall(stack_t **stack, unsigned int line_number);
-void pint(stack_t **stack, unsigned int line_number);
-void pop(stack_t **stack, unsigned int line_number);
-void swap(stack_t **stack, unsigned int line_number);
-void add(stack_t **stack, unsigned int line_number);
-void nop(stack_t **stack, unsigned int line_number);
-void sub(stack_t **stack, unsigned int line_number);
-void monty_div(stack_t **stack, unsigned int line_number);
-void mul(stack_t **stack, unsigned int line_number);
-void mod(stack_t **stack, unsigned int line_number);
-void put_char(stack_t **stack, unsigned int line_number);
-void pstr(stack_t **stack, unsigned int line_number);
-void rotl(stack_t **stack, unsigned int line_number);
-void rotr(stack_t **stack, unsigned int line_number);
-void sta_ck(stack_t **stack, unsigned int line_number);
-void que_ue(stack_t **stack, unsigned int line_number);
+void c14_op_push(stack_t **stack, unsigned int line_number);
+void c15_op_pall(stack_t **stack, unsigned int line_number);
+void c16_op_pint(stack_t **stack, unsigned int line_number);
+void c17_op_pop(stack_t **stack, unsigned int line_number);
+void c18_op_swap(stack_t **stack, unsigned int line_number);
+void c19_op_add(stack_t **stack, unsigned int line_number);
+void c21_op_nop(stack_t **stack, unsigned int line_number);
+void c20_op_sub(stack_t **stack, unsigned int line_number);
+void c22_op_div(stack_t **stack, unsigned int line_number);
+void c23_op_mul(stack_t **stack, unsigned int line_number);
+void c24_op_mod(stack_t **stack, unsigned int line_number);
+void c25_op_putchar(stack_t **stack, unsigned int line_number);
+void c26_op_pstr(stack_t **stack, unsigned int line_number);
+void c27_op_rotl(stack_t **stack, unsigned int line_number);
+void c28_op_rotr(stack_t **stack, unsigned int line_number);
+void c29_op_stack(stack_t **stack, unsigned int line_number);
+void c30_op_queue(stack_t **stack, unsigned int line_number);
 
 
-int montyRunError(void);
-int mallocError(void);
-int fileOpenError(char *filename);
-int montyOperationError(char *opcode, unsigned int line_number);
-int noInternalError(unsigned int line_number);
-int popError(unsigned int line_number);
-int pintError(unsigned int line_number);
-int stackError(unsigned int line_number, char *operat);
-int division_error(unsigned int line_number);
-int putcharError(unsigned int line_number, char *msg);
+int c4_usage_error(void);
+int c31_Er_malloc(void);
+int c5_file_open_error(char *filename);
+int c31_Er_op(char *opcode, unsigned int line_number);
+int c32_Er_NoInteger(unsigned int line_number);
+int c17_op_pop_err(unsigned int line_number);
+int c16_op_pint_err(unsigned int line_number);
+int c29_op_stack_err(unsigned int line_number, char *op);
+int c22_op_div_err(unsigned int line_number);
+int c32_Er_putchar(unsigned int line_number, char *msg);
 
+char **c33_str_tow(char *str, char *c7_delimiter);
+char *c34_get_integer(int n);
 
-char **strTow(char *str, char *delimeter);
-char *getInteger(int n);
+int is_delim(char ch, char *c7_delimiter);
+int c43_word_length(char *str, char *c7_delimiter);
+int c44_word_count(char *str, char *c7_delimiter);
+char *c45_word_next(char *str, char *c7_delimiter);
 
-int is_delim(char ch, char *delimeter);
-int get_word_length(char *str, char *delimeter);
-int get_word_count(char *str, char *delimeter);
-char *wordNext(char *str, char *delimeter);
-int countWords(char *str, char *delimeter);
-int lenWords(char *str, char *delimeter);
-
-
-#endif /* __MONTY_H__ */
+#endif /* MONTY_H */
 

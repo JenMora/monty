@@ -1,77 +1,75 @@
 #include "monty.h"
 
-char **strTow(char *str, char *delimeter);
-int is_delim(char ch, char *delimeter);
-int get_word_length(char *str, char *delimeter);
-int get_word_count(char *str, char *delimeter);
-char *get_next_word(char *str, char *delimeter);
+char **c33_str_tow(char *str, char *c7_delimiter);
+int is_delim(char ch, char *c7_delimiter);
+int c43_word_length(char *str, char *c7_delimiter);
+int c44_word_count(char *str, char *c7_delimiter);
+char *c45_word_next(char *str, char *c7_delimiter);
 
 /**
- * strTow - from string to words
+ * c33_str_tow - from string to words
  * @str: the string
- * @delimeter: does it have a seperator?
+ * @c7_delimiter: does it have a seperator?
  * Return: pointers to the seperate words
  */
-char **strTow(char *str, char *delimeter)
+char **c33_str_tow(char *str, char *c7_delimiter)
 {
-	char **word_str = NULL;
-	int count, len, n = 0, i = 0;
+	char **w = NULL;
+	int word_count, le_n, n, i = 0;
 
 	if (str == NULL || !*str)
 		return (NULL);
-
-	count = countWords(str, delimeter);
-
-	if (count == 0)
+	word_count = c44_word_count(str, c7_delimiter);
+	if (word_count == 0)
 		return (NULL);
-
-	while (i < count)
+	w = malloc((word_count + 1) * sizeof(char *));
+	if (w == NULL)
+		return (NULL);
+	while (i < word_count)
 	{
-		len = lenWords(str, delimeter);
-
-		if (is_delim(*str, delimeter))
+		le_n = c43_word_length(str, c7_delimiter);
+		if (is_delim(*str, c7_delimiter))
 		{
-			str = wordNext(str, delimeter);
+			str = c45_word_next(str, c7_delimiter);
 		}
-
-		word_str[i] = malloc((len + 1) * sizeof(char));
-		if (word_str[i] == NULL)
+		w[i] = malloc((le_n + 1) * sizeof(char));
+		if (w[i] == NULL)
 		{
 			while (i >= 0)
 			{
 				i--;
-				free(word_str[i]);
+				free(w[i]);
 			}
-			free(word_str);
+			free(w);
 			return (NULL);
 		}
-		while (n < len)
+		n = 0;
+		while (n < le_n)
 		{
-			word_str[i][n] = *(str + n);
+			w[i][n] = *(str + n);
 			n++;
 		}
-		word_str[i][n] = '\0';
-		str = wordNext(str, delimeter);
-
+		w[i][n] = '\0'; 
+		str = c45_word_next(str, c7_delimiter);
 		i++;
 	}
-	word_str[i] = NULL;
-	return (word_str);
+	w[i] = NULL; /* last element is null for iteration */
+	return (w);
 }
 
 /**
- * isdelim - does the string have a delim?
+ * is_delim - does the string have a delim?
  * @ch: the characyer delim
- * @delimeter: the delim
+ * @c7_delimiter: the delim
  * Return: 1 or 0
  */
-int is_delim(char ch, char *delimeter)
+int is_delim(char ch, char *c7_delimiter)
 {
 	int i = 0;
 
-	while (delimeter[i])
+	while (c7_delimiter[i])
 	{
-		if (delimeter[i] == ch)
+		if (c7_delimiter[i] == ch)
 			return (1);
 		i++;
 	}
@@ -79,72 +77,70 @@ int is_delim(char ch, char *delimeter)
 }
 
 /**
- * lenWords - gets string length
+ * c43_word_length - gets string length
  * @str: the string
- * @delimeter: delimeter
+ * @c7_delimiter: delimeter
  * Return: len
  */
-int lenWords(char *str, char *delimeter)
+int c43_word_length(char *str, char *c7_delimiter)
 {
-	int lenW = 0, rem = 1, i = 0;
+	int word_length = 0, remainig = 1, i = 0;
 
 	while (*(str + i))
 	{
-		if (is_delim(str[i], delimeter))
-			rem = 1;
-		else if (rem)
+		if (is_delim(str[i], c7_delimiter))
+			remainig = 1;
+		else if (remainig)
 		{
-			lenW++;
+			word_length++;
 		}
-		if (lenW > 0 && is_delim(str[i], delimeter))
-		{
+		if (word_length > 0 && is_delim(str[i], c7_delimiter))
 			break;
-		}
 		i++;
 	}
-	return (lenW);
+	return (word_length);
 }
 
 /**
- * countWords - counts words
+ * c44_word_count - counts words
  * @str: the string
- * @delimeter: delimeter
+ * @c7_delimiter: delimeter
  * Return: count
  */
-int countWords(char *str, char *delimeter)
+int c44_word_count(char *str, char *c7_delimiter)
 {
-	int countW = 0, rem = 1, i = 0;
+	int wordcount = 0, words_left = 1, i = 0;
 
 	while (*(str + i))
 	{
-		if (is_delim(str[i], delimeter))
-			rem = 1;
-		else if (rem)
+		if (is_delim(str[i], c7_delimiter))
+			words_left = 1;
+		else if (words_left)
 		{
-			rem = 0;
-			countW++;
+			words_left = 0;
+			wordcount++;
 		}
 		i++;
 	}
-	return (countW);
+	return (wordcount);
 }
 
 /**
- * wordNext - gets the folowing word in string
+ * c45_word_next - gets the folowing word in string
  * @str: the string
- * @delimeter: delimeter
+ * @c7_delimiter: delimeter
  * Return: address of next file
  */
-char *wordNext(char *str, char *delimeter)
+char *c45_word_next(char *str, char *c7_delimiter)
 {
-	int rem = 0;
+	int words_left = 0;
 	int i = 0;
 
 	while (*(str + i))
 	{
-		if (is_delim(str[i], delimeter))
-			rem = 1;
-		else if (rem)
+		if (is_delim(str[i], c7_delimiter))
+			words_left = 1;
+		else if (words_left)
 			break;
 		i++;
 	}

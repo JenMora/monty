@@ -1,46 +1,45 @@
 #include "monty.h"
 
 /**
- * getInteger - gets char converts to int
+ * c34_get_integer - gets char converts to int
  * @num: num being changed
  * Return: pointer to new string
  */
-void lowerBuff(unsigned int num, unsigned int _lower,
-		char *buff, int buff_size);
-char *getInteger(int num);
-unsigned int _abs(int);
-int lenthOfBaseNum(unsigned int num, unsigned int _lower);
+void c35_base_buffer(unsigned int num, unsigned int base,
+		char *buff, int buffer_size);
+char *c34_get_integer(int num);
+unsigned int c36_make_abs(int);
+int c37_length_of_base(unsigned int num, unsigned int base);
 
-char *getInteger(int num)
+char *c34_get_integer(int num)
 {
-	unsigned int tmp;
+	unsigned int c38_tmp;
 	int length = 0;
-	long num_l = 0;
-	char *result;
+	long base_num= 0;
+	char *string_copy;
 
-	tmp = _abs(num);
-	length = lenthOfBaseNum(tmp, 10);
+	c38_tmp = c36_make_abs(num);
+	length = c37_length_of_base(c38_tmp, 10);
 
-	if (num < 0 || num_l < 0)
+	if (num < 0 || base_num< 0)
 		length++;
-	result = malloc(length + 1);
-	if (!result)
+
+	string_copy = malloc(length + 1);
+	if (!string_copy)
 		return (NULL);
 
-	lowerBuff(tmp, 10, result, length);
-	if (num < 0 || num_l < 0)
-		result[0] = '-';
-				
-	return (result);
+	c35_base_buffer(c38_tmp, 10, string_copy, length);
+	if (num < 0 || base_num< 0)
+		string_copy [0] = '-';
 
+	return (string_copy);
 }
-
 /**
- * _abs - gets absolute valur
+ * c36_make_abs - gets absolute valur
  * @i: the integer whose absolute value is to be got
  */
 
-unsigned int _abs(int i)
+unsigned int c36_make_abs(int i)
 {
 	if (i < 0)
 		return (-(unsigned int)i);
@@ -48,47 +47,48 @@ unsigned int _abs(int i)
 }
 
 /**
- * lenthOfBaseNum - length of buff
+ * c37_length_of_base - length of buff
  * @num: parameter
- * @_lower: the base
+ * @base: the base
  * Return: int
  */
 
-int lenthOfBaseNum(unsigned int num, unsigned int _lower)
+int c37_length_of_base(unsigned int num, unsigned int base)
 {
-	int length = 1;
+	int len = 1;
 
-	while (num > _lower - 1)
+	while (num > base - 1)
 	{
-		length++;
-		num /= _lower;
+		len++;
+		num /= base;
 	}
-	return (length);
+	return (len);
 }
 
 /**
- * lowerBuff - gives buff the right nums
+ * c35_base_buffer - gives buff the right nums
  * @num: number parameter
- * @_lower: the base
+ * @base: the base
  * @buff: buffer
- * @buff_size: bytes
+ * @buffer_size: bytes
  */
-void lowerBuff(unsigned int num, unsigned int _lower,
-		char *buff, int buff_size)
-{
-	int carry;
-	int i = buff_size - 1;
 
-	buff[buff_size] = '\0';
+void c35_base_buffer(unsigned int num, unsigned int base,
+			char *buff, int buffer_size)
+{
+	int carry_forward, i = buffer_size - 1;
+
+	buff[buffer_size] = '\0';
 	while (i >= 0)
 	{
-		carry = num % _lower;
-		if (carry > 9)
-			buff[i] = carry + 87;
+		carry_forward = num % base;
+		if (carry_forward > 9)
+			buff[i] = carry_forward + 87;
 		else
-			buff[i] = carry + '0';
-		num /= _lower;
+			buff[i] = carry_forward + '0';
+		num /= base;
 		i--;
 	}
 
 }
+

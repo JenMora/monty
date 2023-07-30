@@ -1,9 +1,10 @@
 #include "monty.h"
+
+#include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <fcntl.h>
 
-char **token_operators = NULL;
+char **c1_optokens = NULL;
 
 /**
  * main - entry point
@@ -13,18 +14,23 @@ char **token_operators = NULL;
  */
 int main(int argc, char **argv)
 {
-	FILE *fileDir= NULL;
-	int mj_exit= EXIT_SUCCESS;
+	FILE *c2_file_dir = NULL;
+	int c3_exitCd = EXIT_SUCCESS;
 
 	if (argc != 2)
-		return (montyRunError());
+	{
+		return (c4_usage_error());
+	}
 
-	fileDir = fopen(argv[1], "r");
-	if (fileDir == NULL)
-		return (fileOpenError(argv[1]));
+	c2_file_dir = fopen(argv[1], "r");
 
-	mj_exit= letsRunMonty(fileDir);
-	fclose(fileDir);
+	if (c2_file_dir == NULL)
+	{
+		return (c5_file_open_error(argv[1]));
+	}
 
-	return (mj_exit);
+	c3_exitCd = c6_execute_mty(c2_file_dir);
+	fclose(c2_file_dir);
+
+	return (c3_exitCd);
 }

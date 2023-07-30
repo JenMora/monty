@@ -1,165 +1,168 @@
 #define _POSIX_C_SOURCE 200809L
 #include "monty.h"
 
+#include <stdio.h>
+#include <string.h>
+
+void c11_free_tokens(void);
+unsigned int c12_token_length_Er(void);
+int c39_is_blank(char *line, char *c7_delimiter);
+void (*c40_opcode(char *opcode))(stack_t**, unsigned int);
+int c6_execute_mty(FILE *c2_file_dir);
+
+
 /**
- * freeTokens - frees tokens
+ * c11_free_tokens - frees tokens
  */
-
-int blankLine(char *line, char *delimeter);
-void freeTokens(void);
-unsigned int lengthToken(void);
-void (*operation_Code(char *opcode))(stack_t**, unsigned int);
-int letsRunMonty(FILE *fileDir);
-
-void freeTokens(void)
+void c11_free_tokens(void)
 {
 	size_t i = 0;
 
-	if (token_operators == NULL)
+	if (c1_optokens == NULL)
 		return;
-	for (i = 0; token_operators[i]; i++)
-		free(token_operators[i]);
-	free(token_operators);
-}
 
+	for (i = 0; c1_optokens[i]; i++)
+		free(c1_optokens[i]);
+
+	free(c1_optokens);
+}
 /**
- * lengthToken - checks token length
+ * c12_token_length_Er - checks token length
  * Return: length
  */
-
-unsigned int lengthToken(void)
+unsigned int c12_token_length_Er(void)
 {
-	unsigned int tokenLength= 0;
+	unsigned int len_of_tok = 0;
 
-	while (token_operators[tokenLength])
-		tokenLength++;
-	return (tokenLength);
+	while (c1_optokens[len_of_tok])
+		len_of_tok++;
+	return (len_of_tok);
 }
-
 /**
- * monty_blankLine - is the like blank?
+ * c39_is_blank - is the like blank?
  * @line: the line
- * @delimeter: does it have a delimeter?
+ * @c39_is_blank: does it have a delimeter?
  * Return: -1 or 0
  */
-
-int blankLine(char *line, char *delimeter)
+int c39_is_blank(char *line, char *c7_delimiter)
 {
-	int i;
-	int j;
+	int i, j;
 
 	for (i = 0; line[i]; i++)
 	{
-		for (j = 0; delimeter[j]; j++)
+		for (j = 0; c7_delimiter[j]; j++)
 		{
-			if (line[i] == delimeter[j])
+			if (line[i] == c7_delimiter[j])
 				break;
 		}
-		if (delimeter[j] == '\0')
+		if (c7_delimiter[j] == '\0')
 			return (0);
 	}
-	return (-1);
+
+	return (1);
 }
 
 /**
- * operation_Code - checks operator
+ * c40_opcode - checks operator
  * @opcode: the matching operator
  * Return: pointer to operator
  */
-
-void (*operation_Code(char *opcode))(stack_t**, unsigned int)
+void (*c40_opcode(char *opcode))(stack_t**, unsigned int)
 {
-	int i;
-	instruction_t operationFunctions[] = {
-		{"push", push},
-		{"pall", pall},
-		{"pint", pint},
-		{"pop", pop},
-		{"swap", swap},
-		{"add", add},
-		{"nop", nop},
-		{"sub", sub},
-		{"div", monty_div},
-		{"mul", mul},
-		{"mod", mod},
-		{"pchar", put_char},
-		{"pstr", pstr},
-		{"rotl", rotl},
-		{"rotr", rotr},
-		{"stack", sta_ck},
-		{"queue", que_ue},
-		{NULL, NULL}	
+	instruction_t c41_operator_functions[] = {
+		{"push", c14_op_push},
+		{"pall", c15_op_pall},
+		{"pint", c16_op_pint},
+		{"pop", c17_op_pop},
+		{"swap", c18_op_swap},
+		{"add", c19_op_add},
+		{"nop", c21_op_nop},
+		{"sub", c20_op_sub},
+		{"div", c22_op_div},
+		{"mul", c23_op_mul},
+		{"mod", c24_op_mod},
+		{"pchar", c25_op_putchar},
+		{"pstr", c26_op_pstr},
+		{"rotl", c27_op_rotl},
+		{"rotr", c28_op_rotr},
+		{"stack", c29_op_stack},
+		{"queue", c30_op_queue},
+		{NULL, NULL}
 	};
+	int i;
 
-	for (i = 0; operationFunctions[i].opcode; i++)
+	for (i = 0; c41_operator_functions[i].opcode; i++)
 	{
-		if (strcmp(opcode, operationFunctions[i].opcode) == 0)
-			return (operationFunctions[i].f);
+		if (strcmp(opcode, c41_operator_functions[i].opcode) == 0)
+			return (c41_operator_functions[i].f);
 	}
+
 	return (NULL);
 }
 
 /**
- * letsRunMonty - execute
- * @fileDir: the file script to run
+ * c6_execute_mty - execute
+ * @c2_file_dir: the file script to run
  * Return: Exit success or failure
  */
-int letsRunMonty(FILE *fileDir)
+int c6_execute_mty(FILE *c2_file_dir)
 {
+	void (*op_func)(stack_t**, unsigned int);
+	
 	stack_t *stack = NULL;
 	char *line = NULL;
-	size_t len = 0, flee_Exit= EXIT_SUCCESS;
-	unsigned int line_number = 0, previousLengthToken = 0;
-	void (*operation_Function)(stack_t**, unsigned int);
-
-	if (initStack(&stack) == EXIT_FAILURE)
+	size_t len = 0, c42_status_of_exit = EXIT_SUCCESS;
+	unsigned int line_number = 0;
+	unsigned int prev_tLen = 0;
+	
+	if (c9_init(&stack) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 
-	while (getline(&line, &len, fileDir) != -1)
+	while (getline(&line, &len, c2_file_dir) != -1)
 	{
 		line_number++;
-
-		token_operators= strTow(line, DELIMETER);
-		if (token_operators== NULL)
+		c1_optokens = c33_str_tow(line, C7_DELIMITER);
+		if (c1_optokens == NULL)
 		{
-			if (blankLine(line, DELIMETER))
+			if (c39_is_blank(line, C7_DELIMITER))
 				continue;
-			mj_free_the_stack(&stack);
-			return (mallocError());
+			c8_free_stk(&stack);
+			return (c31_Er_malloc());
 		}
-
-		else if (token_operators[0][0] == '#')
+		else if (c1_optokens[0][0] == '#')
 		{
-			freeTokens();
+			c11_free_tokens();
 			continue;
 		}
-		operation_Function = operation_Code(token_operators[0]);
-		if (operation_Function == NULL)
+		op_func = c40_opcode(c1_optokens[0]);
+		if (op_func == NULL)
 		{
-			mj_free_the_stack(&stack);
-			flee_Exit= montyOperationError(token_operators[0], line_number);
-			freeTokens();
+			c8_free_stk(&stack);
+			c42_status_of_exit = c31_Er_op(c1_optokens[0], line_number);
+			c11_free_tokens();
 			break;
 		}
-		previousLengthToken = lengthToken();
-		operation_Function(&stack, line_number);
-		if (lengthToken() != previousLengthToken)
+		prev_tLen = c12_token_length_Er();
+		op_func(&stack, line_number);
+		if (c12_token_length_Er() != prev_tLen)
 		{
-			if (token_operators&& token_operators[previousLengthToken])
-				flee_Exit= atoi(token_operators[previousLengthToken]);
+			if (c1_optokens && c1_optokens[prev_tLen])
+				c42_status_of_exit = atoi(c1_optokens[prev_tLen]);
 			else
-				flee_Exit= EXIT_FAILURE;
-			freeTokens();
+				c42_status_of_exit = EXIT_FAILURE;
+			c11_free_tokens();
 			break;
 		}
-		freeTokens();	
+		c11_free_tokens();
 	}
-	mj_free_the_stack(&stack);
+	c8_free_stk(&stack);
+
 	if (line && *line == 0)
 	{
 		free(line);
-		return (mallocError());
+		return (c31_Er_malloc());
 	}
+
 	free(line);
-	return (flee_Exit);	
+	return (c42_status_of_exit);
 }

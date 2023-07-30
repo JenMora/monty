@@ -1,48 +1,51 @@
 #include "monty.h"
 
-void nop(stack_t **stack, unsigned int line_number);
-void put_char(stack_t **stack, unsigned int line_number);
-void pstr(stack_t **stack, unsigned int line_number);
+void c21_op_nop(stack_t **stack, unsigned int line_number);
+void c25_op_putchar(stack_t **stack, unsigned int line_number);
+void c26_op_pstr(stack_t **stack, unsigned int line_number);
 
 /**
- * nop - function des nothing
+ * c21_op_nop - function des nothing
  * @stack: the stack
  * @line_number: the line number
  */
-void nop(stack_t **stack, unsigned int line_number)
+void c21_op_nop(stack_t **stack, unsigned int line_number)
 {
 	(void)stack;
 	(void)line_number;
 }
 
 /**
- * put_char - prints the top value
+ * c25_op_putchar - prints the top value
  * @stack: the stack
  * @line_number: the line number
  */
-void put_char(stack_t **stack, unsigned int line_number)
+void c25_op_putchar(stack_t **stack, unsigned int line_number)
 {
 	if ((*stack)->next == NULL)
 	{
-		setOprationTokenError(putcharError(line_number, "stack empty"));
+		c13_token_opSet_Er(c32_Er_putchar(line_number, "stack empty"));
 		return;
 	}
 	if ((*stack)->next->n < 0 || (*stack)->next->n > 127)
 	{
-		setOprationTokenError(putcharError(line_number,
-					"value out of range"));
+		c13_token_opSet_Er(c32_Er_putchar(line_number,
+					     "value out of range"));
 		return;
 	}
 	printf("%c\n", (*stack)->next->n);
 }
+
 /**
- * pstr - string contained in stack
+ * c26_op_pstr - string contained in stack
  * @stack: the stack
  * @line_number: the line number
  */
-void pstr(stack_t **stack, unsigned int line_number)
+void c26_op_pstr(stack_t **stack, unsigned int line_number)
 {
-	stack_t *tmp = (*stack)->next;
+	stack_t *tmp;
+	
+	tmp = (*stack)->next;
 
 	while (tmp && tmp->n != 0 && (tmp->n > 0 && tmp->n <= 127))
 	{

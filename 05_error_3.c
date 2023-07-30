@@ -1,39 +1,37 @@
 #include "monty.h"
 
 /**
- * setOprationTokenError - error
- * @_mj_err: integer
+ * c13_token_opSet_Er - error
+ * @error_code: integer
  * Return: Exit failure
  */
-void setOprationTokenError(int _mj_err)
+void c13_token_opSet_Er(int error_code)
 {
-	int tokenLength= 0, i = 0;
-	char *exit_string = NULL;
-	char **tokenNew = NULL;
+	int len_of_tok = 0, i = 0;
+	char *exit_str = NULL;
+	char **tok_new = NULL;
 
-	tokenLength= lengthToken();
-	tokenNew = malloc(sizeof(char *) * (tokenLength+ 2));
-
-	if (!token_operators)
+	len_of_tok = c12_token_length_Er();
+	tok_new = malloc(sizeof(char *) * (len_of_tok + 2));
+	if (c1_optokens == NULL)
 	{
-		mallocError();
+		c31_Er_malloc();
 		return;
 	}
-
-	while (i < tokenLength)
+	while (i < len_of_tok)
 	{
-		tokenNew[i] = token_operators[i];
+		tok_new[i] = c1_optokens[i];
 		i++;
 	}
-	exit_string = getInteger(_mj_err);
-	if (!exit_string)
+	exit_str = c34_get_integer(error_code);
+	if (exit_str == NULL)
 	{
-		free(tokenNew);
-		mallocError();
+		free(tok_new);
+		c31_Er_malloc();
 		return;
 	}
-	tokenNew[i++] = exit_string;
-	tokenNew[i] = NULL;
-	free(token_operators);
-	token_operators= tokenNew;
+	tok_new[i++] = exit_str;
+	tok_new[i] = NULL;
+	free(c1_optokens);
+	c1_optokens = tok_new;
 }

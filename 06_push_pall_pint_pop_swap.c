@@ -1,70 +1,70 @@
 #include "monty.h"
 
-void push(stack_t **stack, unsigned int line_number);
-void pall(stack_t **stack, unsigned int line_number);
-void pint(stack_t **stack, unsigned int line_number);
-void pop(stack_t **stack, unsigned int line_number);
-void swap(stack_t **stack, unsigned int line_number);
+void c14_op_push(stack_t **stack, unsigned int line_number);
+void c15_op_pall(stack_t **stack, unsigned int line_number);
+void c16_op_pint(stack_t **stack, unsigned int line_number);
+void c17_op_pop(stack_t **stack, unsigned int line_number);
+void c18_op_swap(stack_t **stack, unsigned int line_number);
 
 /**
- * push - pushes into stack
+ * c14_op_push - pushes into stack
  * @stack: pinter to the pushed node
  * @line_number: line nimber
  */
-void push(stack_t **stack, unsigned int line_number)
+void c14_op_push(stack_t **stack, unsigned int line_number)
 {
-	stack_t *tmp, *newNode;
+	stack_t *tmp, *new;
 	int i;
 
-	newNode = malloc(sizeof(stack_t));
-	if (newNode == NULL)
+	new = malloc(sizeof(stack_t));
+	if (new == NULL)
 	{
-		setOprationTokenError(mallocError());
-		return;	
-	}
-	if (token_operators[1] == NULL)
-	{
-		setOprationTokenError(noInternalError(line_number));
+		c13_token_opSet_Er(c31_Er_malloc());
 		return;
 	}
-	for (i = 0; token_operators[1][i]; i++)
+	if (c1_optokens[1] == NULL)
 	{
-		if (token_operators[1][i] == '-' && i == 0)
+		c13_token_opSet_Er(c32_Er_NoInteger(line_number));
+		return;
+	}
+	for (i = 0; c1_optokens[1][i]; i++)
+	{
+		if (c1_optokens[1][i] == '-' && i == 0)
 			continue;
-		if (token_operators[1][i] < '0' || token_operators[1][i] > '9')
+		if (c1_optokens[1][i] < '0' || c1_optokens[1][i] > '9')
 		{
-			setOprationTokenError(noInternalError(line_number));
+			c13_token_opSet_Er(c32_Er_NoInteger(line_number));
 			return;
 		}
-		
 	}
-	newNode->n = atoi(token_operators[1]);
-	if (checkMonty(*stack) == MJ_STACK)
+	new->n = atoi(c1_optokens[1]);
+	if (c10_check(*stack) == STACK)
+
 	{
 		tmp = (*stack)->next;
-		newNode->prev = *stack;
-		newNode->next = tmp;
+		new->prev = *stack;
+		new->next = tmp;
 		if (tmp)
-			tmp->prev = newNode;
-		(*stack)->next = newNode;
+			tmp->prev = new;
+		(*stack)->next = new;
 	}
 	else
 	{
 		tmp = *stack;
 		while (tmp->next)
 			tmp = tmp->next;
-		newNode->prev = tmp;
-		newNode->next = NULL;
-		tmp->next = newNode;
+		new->prev = tmp;
+		new->next = NULL;
+		tmp->next = new;
 	}
 }
 
 /**
- * pall - function to printd stack values
+ * c15_op_pall - function to printd stack values
  * @stack: the stack
  * @line_number: the line number
  */
-void pall(stack_t **stack, unsigned int line_number)
+void c15_op_pall(stack_t **stack, unsigned int line_number)
 {
 	stack_t *tmp = (*stack)->next;
 
@@ -77,32 +77,32 @@ void pall(stack_t **stack, unsigned int line_number)
 }
 
 /**
- * pint - pint function
+ * c16_op_pint - pint function
  * @stack: the stack
  * @line_number: the line number
  */
-void pint(stack_t **stack, unsigned int line_number)
+void c16_op_pint(stack_t **stack, unsigned int line_number)
 {
 	if ((*stack)->next == NULL)
 	{
-		setOprationTokenError(pintError(line_number));
+		c13_token_opSet_Er(c16_op_pint_err(line_number));
 		return;
 	}
 	printf("%d\n", (*stack)->next->n);
 }
 
 /**
- * pop - removes elements from a stack
+ * c17_op_pop - removes elements from a stack
  * @stack: the stack
  * @line_number: the line number
  */
-void pop(stack_t **stack, unsigned int line_number)
+void c17_op_pop(stack_t **stack, unsigned int line_number)
 {
 	stack_t *next = NULL;
 
 	if ((*stack)->next == NULL)
 	{
-		setOprationTokenError(popError(line_number));
+		c13_token_opSet_Er(c17_op_pop_err(line_number));
 		return;
 	}
 	next = (*stack)->next->next;
@@ -113,17 +113,17 @@ void pop(stack_t **stack, unsigned int line_number)
 }
 
 /**
- * swap - swap elements of a stack
+ * c18_op_swap - swap elements of a stack
  * @stack: the stacl
  * @line_number: the line number
  */
-void swap(stack_t **stack, unsigned int line_number)
+void c18_op_swap(stack_t **stack, unsigned int line_number)
 {
 	stack_t *tmp;
 
 	if ((*stack)->next == NULL || (*stack)->next->next == NULL)
 	{
-		setOprationTokenError(stackError(line_number, "swap"));
+		c13_token_opSet_Er(c29_op_stack_err(line_number, "swap"));
 		return;
 	}
 
