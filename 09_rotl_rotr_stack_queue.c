@@ -12,7 +12,7 @@ void c30_op_queue(stack_t **stack, unsigned int line_number);
  */
 void c27_op_rotl(stack_t **stack, unsigned int line_number)
 {
-	stack_t *top; 
+	stack_t *top;
 stack_t *bottom;
 
 (void)line_number;
@@ -38,7 +38,7 @@ stack_t *bottom;
  */
 void c28_op_rotr(stack_t **stack, unsigned int line_number)
 {
-	stack_t *top; 
+	stack_t *top;
 	stack_t *bottom;
 
 	(void)line_number;

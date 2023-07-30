@@ -1,42 +1,43 @@
 #include "monty.h"
 
-/**
- * c34_get_integer - gets char converts to int
- * @num: num being changed
- * Return: pointer to new string
- */
 void c35_base_buffer(unsigned int num, unsigned int base,
 		char *buff, int buffer_size);
 char *c34_get_integer(int num);
 unsigned int c36_make_abs(int);
 int c37_length_of_base(unsigned int num, unsigned int base);
 
+/**
+ * c34_get_integer - gets char converts to int
+ * @num: num being changed
+ * Return: pointer to new string
+ */
+
+/*MY CODES*/
+
 char *c34_get_integer(int num)
 {
 	unsigned int c38_tmp;
 	int length = 0;
-	long base_num= 0;
+	long base_num = 0;
 	char *string_copy;
 
 	c38_tmp = c36_make_abs(num);
 	length = c37_length_of_base(c38_tmp, 10);
-
-	if (num < 0 || base_num< 0)
+	if (num < 0 || base_num < 0)
 		length++;
-
 	string_copy = malloc(length + 1);
 	if (!string_copy)
 		return (NULL);
-
 	c35_base_buffer(c38_tmp, 10, string_copy, length);
-	if (num < 0 || base_num< 0)
-		string_copy [0] = '-';
+	if (num < 0 || base_num < 0)
+		string_copy[0] = '-';
 
 	return (string_copy);
 }
 /**
  * c36_make_abs - gets absolute valur
  * @i: the integer whose absolute value is to be got
+ * Return: value
  */
 
 unsigned int c36_make_abs(int i)
@@ -91,4 +92,3 @@ void c35_base_buffer(unsigned int num, unsigned int base,
 	}
 
 }
-

@@ -54,6 +54,7 @@ int c22_op_div_err(unsigned int line_number)
  * c32_Er_putchar - putchar error
  * @line_number: line number where error is
  * @msg: the error message
+ * Return: Exit Stat
  */
 int c32_Er_putchar(unsigned int line_number, char *msg)
 {

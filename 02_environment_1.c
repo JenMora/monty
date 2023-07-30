@@ -23,7 +23,6 @@ void c11_free_tokens(void)
 
 	for (i = 0; c1_optokens[i]; i++)
 		free(c1_optokens[i]);
-
 	free(c1_optokens);
 }
 /**
@@ -41,7 +40,7 @@ unsigned int c12_token_length_Er(void)
 /**
  * c39_is_blank - is the like blank?
  * @line: the line
- * @c39_is_blank: does it have a delimeter?
+ * @c7_delimiter: does it have a delimeter?
  * Return: -1 or 0
  */
 int c39_is_blank(char *line, char *c7_delimiter)
@@ -58,7 +57,6 @@ int c39_is_blank(char *line, char *c7_delimiter)
 		if (c7_delimiter[j] == '\0')
 			return (0);
 	}
-
 	return (1);
 }
 
@@ -96,7 +94,6 @@ void (*c40_opcode(char *opcode))(stack_t**, unsigned int)
 		if (strcmp(opcode, c41_operator_functions[i].opcode) == 0)
 			return (c41_operator_functions[i].f);
 	}
-
 	return (NULL);
 }
 
@@ -108,13 +105,13 @@ void (*c40_opcode(char *opcode))(stack_t**, unsigned int)
 int c6_execute_mty(FILE *c2_file_dir)
 {
 	void (*op_func)(stack_t**, unsigned int);
-	
+
 	stack_t *stack = NULL;
 	char *line = NULL;
 	size_t len = 0, c42_status_of_exit = EXIT_SUCCESS;
 	unsigned int line_number = 0;
 	unsigned int prev_tLen = 0;
-	
+
 	if (c9_init(&stack) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 
@@ -156,13 +153,11 @@ int c6_execute_mty(FILE *c2_file_dir)
 		c11_free_tokens();
 	}
 	c8_free_stk(&stack);
-
 	if (line && *line == 0)
 	{
 		free(line);
 		return (c31_Er_malloc());
 	}
-
 	free(line);
 	return (c42_status_of_exit);
 }

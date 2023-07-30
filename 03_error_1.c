@@ -1,7 +1,7 @@
 #include "monty.h"
 
 int c32_Er_NoInteger(unsigned int line_number);
-int c5_file_open_error(char *filename); 
+int c5_file_open_error(char *filename);
 int c4_usage_error(void);
 int c31_Er_malloc(void);
 int c31_Er_op(char *opcode, unsigned int line_number);

@@ -21,16 +21,12 @@ int main(int argc, char **argv)
 	{
 		return (c4_usage_error());
 	}
-
 	c2_file_dir = fopen(argv[1], "r");
-
 	if (c2_file_dir == NULL)
 	{
 		return (c5_file_open_error(argv[1]));
 	}
-
 	c3_exitCd = c6_execute_mty(c2_file_dir);
 	fclose(c2_file_dir);
-
 	return (c3_exitCd);
 }

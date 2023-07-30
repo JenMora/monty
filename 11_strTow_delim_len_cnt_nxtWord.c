@@ -49,11 +49,11 @@ char **c33_str_tow(char *str, char *c7_delimiter)
 			w[i][n] = *(str + n);
 			n++;
 		}
-		w[i][n] = '\0'; 
+		w[i][n] = '\0';
 		str = c45_word_next(str, c7_delimiter);
 		i++;
 	}
-	w[i] = NULL; /* last element is null for iteration */
+	w[i] = NULL;
 	return (w);
 }
 

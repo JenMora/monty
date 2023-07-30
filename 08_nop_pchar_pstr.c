@@ -44,7 +44,7 @@ void c25_op_putchar(stack_t **stack, unsigned int line_number)
 void c26_op_pstr(stack_t **stack, unsigned int line_number)
 {
 	stack_t *tmp;
-	
+
 	tmp = (*stack)->next;
 
 	while (tmp && tmp->n != 0 && (tmp->n > 0 && tmp->n <= 127))
